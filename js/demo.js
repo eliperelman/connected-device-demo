@@ -2,11 +2,11 @@
   'use strict';
 
   let url = 'http://localhost:8080/devices/*';
+  let $processes;
 
   let get = (endpoint) => fetch(`${url}${endpoint}`, { method: 'GET', mode: 'cors' }).then(r => r.json());
   let post = (endpoint) => fetch(`${url}${endpoint}`, { method: 'POST', mode: 'cors' });
   let del = (endpoint) => fetch(`${url}${endpoint}`, { method: 'DELETE', mode: 'cors' });
-
   let stream = (endpoint, callback) => {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', `${url}${endpoint}`, true);
@@ -17,9 +17,6 @@
     };
     xhr.send();
   };
-
-  let $processes;
-
 
   let processes = () => {
     get('/processes')
