@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="favicon.ico">
+
+  <title>Connected Device Service</title>
+
+  <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/cover.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="site-wrapper">
+  <div class="site-wrapper-inner">
+    <div class="cover-container">
+
+      <div class="masthead clearfix">
+        <div class="inner">
+          <h3 class="masthead-brand">
+            <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+            Connected Device Service
+          </h3>
+          <nav>
+            <ul class="nav masthead-nav">
+              <li><a href="#" data-selector=".processes">Processes</a></li>
+              <li><a href="#" data-selector=".logs">Logs</a></li>
+              <li><a href="#" data-selector=".actions">Actions</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="inner cover demo">
+        <h3>DEMO</h3>
+      </div>
+
+      <div class="inner cover processes" hidden>
+        <table class="table" id="processes" hidden>
+          <tr>
+            <th>Name</th>
+            <th>PID</th>
+            <th>USS</th>
+            <th>PSS</th>
+            <th>RSS</th>
+            <th>&nbsp;</th>
+          </tr>
+          <tr v-for="proc in processes">
+            <td>{{proc.name}}</td>
+            <td>{{proc.pid}}</td>
+            <td>{{proc.uss}}MB</td>
+            <td>{{proc.pss}}MB</td>
+            <td>{{proc.rss}}MB</td>
+            <td><a href="/processes/{{proc.pid}}" class="kill btn btn-xs btn-danger">Kill</a></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="inner cover logs" hidden>
+        <pre class="pre-scrollable" id="logs"></pre>
+      </div>
+
+      <div class="inner cover actions" hidden>
+
+        <a href="/restart?hard=1" role="button" class="btn btn-lg btn-warning service-action">Reboot</a>
+        <a href="/restart" role="button" class="btn btn-lg btn-primary service-action">Restart B2G</a>
+      </div>
+
+      <div class="mastfoot">
+        <div class="inner"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/demo.js"></script>
+</body>
+</html>
