@@ -1,7 +1,9 @@
 (() => {
   'use strict';
 
-  let url = 'http://localhost:8080/devices/*';
+  let $deviceList = document.getElementById('device-list');
+  let $loading = document.querySelector('.inner.loading');
+  let url;
   let $processes;
 
   let get = (endpoint) => fetch(`${url}${endpoint}`, { method: 'GET', mode: 'cors' }).then(r => r.json());
@@ -18,15 +20,25 @@
     xhr.send();
   };
 
+  let showLoading = el => {
+    el.setAttribute('hidden', 'hidden');
+    $loading.removeAttribute('hidden');
+  };
+  let hideLoading = el => {
+    $loading.setAttribute('hidden', 'hidden');
+    el.removeAttribute('hidden');
+  };
+
   let processes = () => {
     get('/processes')
       .then(processes => {
         if (!$processes) {
-          document.getElementById('processes').removeAttribute('hidden');
+          hideLoading(document.querySelector('.processes'));
           $processes = new Vue({
             el: '#processes',
             data: { processes }
           });
+          document.getElementById('processes').removeAttribute('hidden');
         } else {
           $processes.processes = processes;
         }
@@ -43,6 +55,17 @@
     });
   };
 
+  $deviceList.addEventListener('click', e => {
+    if (!e.target.classList.contains('list-group-item')) {
+      return;
+    }
+
+    url += `/devices/${e.target.getAttribute('id')}`;
+
+    showLoading($deviceList);
+    document.getElementById('processes-link').click();
+  });
+
   let anchors = Array.from(document.querySelectorAll('.masthead-nav a'));
 
   anchors.forEach(el => {
@@ -55,7 +78,10 @@
       });
       e.target.parentNode.classList.add('active');
       let selector = e.target.getAttribute('data-selector');
-      document.querySelector(selector).removeAttribute('hidden');
+
+      if (selector !== '.processes') {
+        hideLoading(document.querySelector(selector));
+      }
     });
   });
 
@@ -88,5 +114,22 @@
       let endpoint = e.target.getAttribute('href');
       post(endpoint);
     });
+  });
+
+  document.getElementById('host-form').addEventListener('submit', e => {
+    e.preventDefault();
+    url = `http://${document.getElementById('host').value}:8080`;
+    e.target.setAttribute('hidden', 'hidden');
+
+    get('/devices')
+      .then(devices => {
+        new Vue({
+          el: '#device-list',
+          data: { devices }
+        });
+
+        $deviceList.removeAttribute('hidden');
+      });
+
   });
 })();

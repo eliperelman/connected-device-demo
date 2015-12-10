@@ -120,7 +120,7 @@ pre {
  * Cover
  */
 
-.cover {
+.cover, .loading {
   padding: 0;
   margin-top: 50px;
 }
@@ -130,6 +130,11 @@ pre {
   font-weight: bold;
 }
 
+.cover.demo .input-lg {
+  height: 72px;
+  font-size: 36px;
+  padding: 16px 20px;
+}
 
 /*
  * Footer

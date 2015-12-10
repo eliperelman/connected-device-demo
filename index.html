@@ -30,7 +30,7 @@
           </h3>
           <nav>
             <ul class="nav masthead-nav">
-              <li><a href="#" data-selector=".processes">Processes</a></li>
+              <li><a href="#" data-selector=".processes" id="processes-link">Processes</a></li>
               <li><a href="#" data-selector=".logs">Logs</a></li>
               <li><a href="#" data-selector=".actions">Actions</a></li>
             </ul>
@@ -38,8 +38,22 @@
         </div>
       </div>
 
+      <div class="inner loading" hidden>
+        Loading...
+      </div>
+
       <div class="inner cover demo">
-        <h3>DEMO</h3>
+        <form class="form-horizontal" id="host-form">
+          <div class="col-sm-10 col-sm-offset-1">
+            <input type="host" class="form-control input-lg" id="host" placeholder="Host Address" />
+          </div>
+        </form>
+
+        <div class="list-group" id="device-list" hidden>
+          <a href="#" class="list-group-item" id="{{device.id}}" v-for="device in devices">
+            Serial: {{device.serial}}
+          </a>
+        </div>
       </div>
 
       <div class="inner cover processes" hidden>
