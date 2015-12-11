@@ -98,7 +98,10 @@
     del(url);
   });
 
-  document.querySelector('[data-selector=".processes"]').addEventListener('click', e => {
+  let processesLink = document.querySelector('[data-selector=".processes"]');
+
+  processesLink.addEventListener('click', function handler(e) {
+    processesLink.removeEventListener('click', handler);
     e.preventDefault();
     setInterval(() => processes(), 2000);
   });
