@@ -133,6 +133,6 @@
 
         $deviceList.removeAttribute('hidden');
       });
-
   });
+
 })();
